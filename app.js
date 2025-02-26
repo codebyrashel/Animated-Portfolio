@@ -1,17 +1,19 @@
-const video1 = document.getElementById('projectVideo1');
-const video2 = document.getElementById('projectVideo2');
-const video3 = document.getElementById('projectVideo3');
-const hoverSign = document.querySelector(".hover-sign");
+document.addEventListener("DOMContentLoaded", function () {
+    const videos = document.querySelectorAll("video");
+    const hoverSign = document.querySelector(".hover-sign");
 
-const videoList = [video1, video2, video3];
+    videos.forEach(video => {
+        video.muted = true; // Ensure autoplay works
 
-videoList.forEach(function(video){
-    video.addEventListener('mouseover', function(){
-        video.play();
-        hoverSign.classList.add("active")
-    })
-    video.addEventListener('mouseout', function(){
-        video.pause();
-        hoverSign.classList.remove("active")
-    })
-})
+        video.addEventListener("mouseenter", function () {
+            video.currentTime = 0; // Reset video to the start when hovering
+            video.play();
+            hoverSign.classList.add("active"); // Hide hover sign
+        });
+
+        video.addEventListener("mouseleave", function () {
+            video.pause();
+            hoverSign.classList.remove("active"); // Show hover sign again
+        });
+    });
+});
