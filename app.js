@@ -1,19 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const videos = document.querySelectorAll("video");
-    const hoverSign = document.querySelector(".hover-sign");
-
+    const projectSection = document.querySelector(".my-projects"); // Target the specific section
+    const videos = projectSection.querySelectorAll("video"); // Only select videos within this section
+    
     videos.forEach(video => {
+        const hoverSign = video.closest(".project-vidbox").querySelector(".hover-sign");
         video.muted = true; // Ensure autoplay works
 
         video.addEventListener("mouseenter", function () {
-            video.currentTime = 0; // Reset video to the start when hovering
-            video.play();
-            hoverSign.classList.add("active"); // Hide hover sign
+            if (hoverSign) hoverSign.style.display = "none"; // Hide hover sign properly
+            video.play(); // Play video without resetting
         });
 
         video.addEventListener("mouseleave", function () {
-            video.pause();
-            hoverSign.classList.remove("active"); // Show hover sign again
+            video.pause(); // Pause without resetting
+            if (hoverSign) hoverSign.style.display = "block"; // Show hover sign again
+        });
+
+        video.addEventListener("ended", function () {
+            video.currentTime = 0; // Restart video when it ends
+            video.play(); // Play again
         });
     });
 });
